@@ -134,11 +134,10 @@ const ImageGallery = ({ searchText, toggleModal }) => {
       // setLoadedImagesCount((prevCount) => prevCount + newImages.length);
       setLoadedImagesCount((prevCount) => {
         const loadedImagesCount = prevCount + newImages.length;
-        
-        // console.log('Loaded Images Count:', loadedImagesCount);
-        setTimeout(() => {
-        console.log("Loaded Images Count:", loadedImagesCount);
-         }, 0);
+        console.log('Loaded Images Count:', loadedImagesCount);
+        // setTimeout(() => {
+        //   console.log("Loaded Images Count:", loadedImagesCount);
+        // }, 0);
         return loadedImagesCount;
       });
       setTotalHits(data.totalHits);
