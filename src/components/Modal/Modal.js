@@ -77,3 +77,5 @@ const Modal = ({ image, closeModal }) => {
 };
 
 export default Modal;
+
+
