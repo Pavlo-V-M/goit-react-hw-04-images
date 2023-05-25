@@ -119,7 +119,7 @@ const ImageGallery = ({ searchText, toggleModal }) => {
       setLoadedImagesCount(0);
       fetchImages();
     }
-    // eslint - disable - next - line react - hooks / exhaustive - deps;
+  // eslint - disable - next - line react - hooks / exhaustive - deps;
   }, [searchText]);
 
   const fetchImages = () => { 
