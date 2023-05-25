@@ -99,7 +99,7 @@
   //   }
   // }
 
-  //------------------------------------------------------------------
+//------------------------------------------------------------------
 
 import React, { useState, useEffect } from 'react';
 import { getSearchElements } from '../../api/api';
@@ -113,13 +113,15 @@ const ImageGallery = ({ searchText, toggleModal }) => {
   const [totalHits, setTotalHits] = useState(0);
 
   useEffect(() => {
-    if (searchText) {
+    if (!searchText) { 
+      return
+    }
+    else {
       setImages([]);
       setCurrentPage(1);
       setLoadedImagesCount(0);
       fetchImages();
-    }
-  // eslint - disable - next - line react - hooks / exhaustive - deps;
+    }// eslint-disable-next-line
   }, [searchText]);
 
   const fetchImages = () => { 
