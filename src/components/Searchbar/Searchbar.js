@@ -110,5 +110,3 @@ const Searchbar = ({ handleSearch }) => {
 };
 
 export default Searchbar;
-
-
