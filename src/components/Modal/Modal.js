@@ -1,3 +1,39 @@
+import React, { useEffect } from 'react';
+
+const Modal = ({ image, closeModal }) => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeModal]);
+
+  const closeModalOnClick = (e) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
+  return (
+    <div className="Overlay" onClick={closeModalOnClick}>
+      <div className="Modal">
+        <img src={image} alt="" />
+      </div>
+    </div>
+  );
+};
+
+export default Modal;
+
+//----------------------------------------------------------------------
+
 // import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 
@@ -41,41 +77,3 @@
 // };
 
 // export default Modal;
-
-//----------------------------------------------------------------------
-
-import React, { useEffect } from 'react';
-
-const Modal = ({ image, closeModal }) => {
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.code === 'Escape') {
-        closeModal();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [closeModal]);
-
-  const closeModalOnClick = (e) => {
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
-  };
-
-  return (
-    <div className="Overlay" onClick={closeModalOnClick}>
-      <div className="Modal">
-        <img src={image} alt="" />
-      </div>
-    </div>
-  );
-};
-
-export default Modal;
-
-
