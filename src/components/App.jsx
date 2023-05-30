@@ -7,9 +7,16 @@ export const App = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [selectedImage, setSelectedImage] = useState('');
+  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
+  const [totalHits, setTotalHits] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearch = (searchText) => {
+    setIsShowModal(false);
     setSearchText(searchText);
+    setLoadedImagesCount(0);
+    setTotalHits(0);
+    setCurrentPage(1);
   };
 
   const toggleModal = (image) => {
@@ -19,19 +26,28 @@ export const App = () => {
 
   const closeModal = () => {
     setIsShowModal(false);
-    // setSelectedImage('');
+    setSelectedImage('');
   };
 
   return (
     <div className="appRenderWrap">
       <Searchbar handleSearch={handleSearch} />
-      <ImageGallery searchText={searchText} toggleModal={toggleModal} />
+      <ImageGallery
+        searchText={searchText}
+        toggleModal={toggleModal}
+        loadedImagesCount={loadedImagesCount}
+        setLoadedImagesCount={setLoadedImagesCount}
+        totalHits={totalHits}
+        setTotalHits={setTotalHits}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
       {isShowModal && <Modal image={selectedImage} closeModal={closeModal} />}
     </div>
   );
 };
 
-// export default App;
+export default App;
 
 //---------------------------------------------------------------------------------
 

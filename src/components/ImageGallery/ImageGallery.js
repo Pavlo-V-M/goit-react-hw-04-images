@@ -1,59 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getSearchElements } from '../../api/api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Button from '../Button/Button';
 
-const ImageGallery = ({ searchText, toggleModal }) => {
+const ImageGallery = ({
+  searchText,
+  toggleModal,
+  loadedImagesCount,
+  setLoadedImagesCount,
+  totalHits,
+  setTotalHits,
+  currentPage,
+  setCurrentPage
+}) => {
   const [images, setImages] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
-  const [totalHits, setTotalHits] = useState(0);
 
   useEffect(() => {
-    if (!searchText) { 
-      return
-    }
-    else {
-      setImages([]);
-      setCurrentPage(1);
-      setLoadedImagesCount(0);
+    if (searchText) {
       fetchImages();
     }// eslint-disable-next-line
   }, [searchText]);
 
-  const fetchImages = () => { 
-    const perPage = 12; // Number of images per page
-
+  const fetchImages = () => {
+  const perPage = 12; // Number of images per page
     getSearchElements(searchText, perPage, currentPage).then((data) => {
-      console.log(searchText);
-      console.log(data);
       const newImages = data.hits;
-      setImages((prevImages) => [...prevImages, ...newImages]);
-      setCurrentPage((prevPage) => prevPage + 1);
-      
-      setLoadedImagesCount((prevCount) => {
-        const loadedImagesCount = prevCount + newImages.length;
-        console.log('Loaded Images Count:', loadedImagesCount);
-        return loadedImagesCount;
-      });
+      setImages(newImages); // Reset the images state with new images
+      setLoadedImagesCount((prevCount) => prevCount + newImages.length);
       setTotalHits(data.totalHits);
+      setCurrentPage((prevPage) => prevPage + 1);
     });
-  };
+ };
 
   const handleImageClick = (image) => {
     toggleModal(image);
   };
 
-  const showLoadMore = images.length > 0 && loadedImagesCount < totalHits;
+  const showLoadMore = loadedImagesCount < totalHits;
+
+  const handleLoadMore = () => {
+    fetchImages();
+  };
 
   return (
     <div className="ImageGalleryWrap">
-      {images.length > 0 && (
+      {loadedImagesCount > 0 && (
         <ul className="ImageGallery">
           <ImageGalleryItem images={images} onImageClick={handleImageClick} />
         </ul>
       )}
-      {showLoadMore && <Button onLoadMore={fetchImages} />}
+      {showLoadMore && <Button onLoadMore={handleLoadMore} />}
     </div>
   );
 };

@@ -1,12 +1,14 @@
+
 import React, { useState } from 'react';
 import { RotatingSquare } from 'react-loader-spinner';
 
-const Searchbar = ({ handleSearch }) => {
+const Searchbar = (props) => {
+  const { handleSearch } = props;
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = ({ target: { value } }) => {
-    setInputValue(value);
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
