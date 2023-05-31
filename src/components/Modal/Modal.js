@@ -1,5 +1,5 @@
-
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const Modal = ({ image, closeModal }) => {
   useEffect(() => {
@@ -29,6 +29,11 @@ const Modal = ({ image, closeModal }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  image: PropTypes.string.isRequired,
+ closeModal: PropTypes.func.isRequired,
 };
 
 export default Modal;

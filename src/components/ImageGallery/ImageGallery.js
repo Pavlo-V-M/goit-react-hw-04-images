@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getSearchElements } from '../../api/api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import Button from '../Button/Button';
+import PropTypes from 'prop-types';
 
 const ImageGallery = ({
   searchText,
@@ -23,12 +24,16 @@ const ImageGallery = ({
 
   const fetchImages = () => {
   const perPage = 12; // Number of images per page
-    getSearchElements(searchText, perPage, currentPage).then((data) => {
-      const newImages = data.hits;
-      setImages(newImages); // Reset the images state with new images
-      setLoadedImagesCount((prevCount) => prevCount + newImages.length);
-      setTotalHits(data.totalHits);
-      setCurrentPage((prevPage) => prevPage + 1);
+  getSearchElements(searchText, perPage, currentPage).then((data) => {
+    const newImages = data.hits;
+    if (currentPage === 1) {
+      setImages(newImages); // Reset the images state with new images for the first page
+    } else {
+      setImages((prevImages) => [...prevImages, ...newImages]); // Append new images to the existing images for subsequent pages
+    }
+    setLoadedImagesCount((prevCount) => prevCount + newImages.length);
+    setTotalHits(data.totalHits);
+    setCurrentPage((prevPage) => prevPage + 1);
     });
  };
 
@@ -52,6 +57,17 @@ const ImageGallery = ({
       {showLoadMore && <Button onLoadMore={handleLoadMore} />}
     </div>
   );
+};
+
+ImageGallery.propTypes = {
+  searchText: PropTypes.string.isRequired,
+  toggleModal: PropTypes.func.isRequired,
+  loadedImagesCount: PropTypes.number.isRequired,
+  setLoadedImagesCount: PropTypes.func.isRequired,
+  totalHits: PropTypes.number.isRequired,
+  setTotalHits: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 export default ImageGallery;

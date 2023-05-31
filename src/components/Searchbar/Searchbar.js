@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { RotatingSquare } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 
 const Searchbar = (props) => {
   const { handleSearch } = props;
@@ -45,6 +46,10 @@ const Searchbar = (props) => {
       </form>
     </header>
   );
+};
+
+Searchbar.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
 };
 
 export default Searchbar;
